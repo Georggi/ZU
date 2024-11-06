@@ -1,19 +1,23 @@
-package com.georggi.zvezdoletutilities;
+package zu;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import zu.command.ZUCommands;
+import zu.restart.Restarter;
+import zu.util.RestartSchedule;
 
 public class CommonProxy {
 
     // preInit "Run before anything else. Read your config, create blocks, items, etc, and register them with the
     // GameRegistry." (Remove if not needed)
     public void preInit(FMLPreInitializationEvent event) {
-        Config.synchronizeConfiguration(event.getSuggestedConfigurationFile());
+        ZUConfig.synchronizeConfiguration(event.getSuggestedConfigurationFile());
 
-        ZvezdoletUtilities.LOG.info(Config.greeting);
-        ZvezdoletUtilities.LOG.info("I am MyMod at version " + Tags.VERSION);
+        ZU.LOG.info(ZUConfig.discordBotToken);
+        ZU.LOG.info(ZUConfig.restartSchedule);
+        ZU.LOG.info("I am " + ZU.MODID + " at version " + Tags.VERSION);
     }
 
     // load "Do your mod setup. Build whatever data structures you care about. Register recipes." (Remove if not needed)
@@ -23,5 +27,18 @@ public class CommonProxy {
     public void postInit(FMLPostInitializationEvent event) {}
 
     // register server commands in this event handler (Remove if not needed)
-    public void serverStarting(FMLServerStartingEvent event) {}
+    public void serverStarting(FMLServerStartingEvent event) {
+        ZUCommands.registerCommands(event);
+
+        if (ZUConfig.restartSchedule != null) {
+            try {
+                RestartSchedule schedule = new RestartSchedule(ZUConfig.restartSchedule);
+                if (schedule.secondsToRestart > 0) {
+                    Restarter.autoRestarter = new Restarter(schedule.secondsToRestart, 3600);
+                }
+            } catch (Exception e) {
+                ZU.LOG.error("Failed to parse restart schedule", e);
+            }
+        }
+    }
 }

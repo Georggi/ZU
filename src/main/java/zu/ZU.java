@@ -1,4 +1,6 @@
-package com.georggi.zvezdoletutilities;
+package zu;
+
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,14 +11,16 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.network.NetworkCheckHandler;
+import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = ZvezdoletUtilities.MODID, version = Tags.VERSION, name = "Zvezdolet Utilities", acceptedMinecraftVersions = "[1.7.10]")
-public class ZvezdoletUtilities {
+@Mod(modid = ZU.MODID, version = Tags.VERSION, name = "Zvezdolet Utilities", acceptedMinecraftVersions = "[1.7.10]")
+public class ZU {
 
-    public static final String MODID = "zvezdoletutilities";
+    public static final String MODID = "zu";
     public static final Logger LOG = LogManager.getLogger(MODID);
 
-    @SidedProxy(clientSide = "com.georggi.zvezdoletutilities.ClientProxy", serverSide = "com.georggi.zvezdoletutilities.CommonProxy")
+    @SidedProxy(serverSide = "zu.CommonProxy", clientSide = "zu.CommonProxy")
     public static CommonProxy proxy;
 
     @Mod.EventHandler
@@ -42,5 +46,11 @@ public class ZvezdoletUtilities {
     // register server commands in this event handler (Remove if not needed)
     public void serverStarting(FMLServerStartingEvent event) {
         proxy.serverStarting(event);
+    }
+
+    @NetworkCheckHandler
+    public boolean checkModLists(Map<String, String> map, Side side) {
+        return side != Side.CLIENT || map.containsKey(ZU.MODID) && map.get(ZU.MODID)
+            .equals(Tags.VERSION);
     }
 }
