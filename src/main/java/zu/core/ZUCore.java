@@ -7,7 +7,7 @@ import java.util.Set;
 import com.gtnewhorizon.gtnhmixins.IEarlyMixinLoader;
 
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
-import serverutils.mixin.Mixins;
+import zu.mixins.Mixins;
 
 public class ZUCore implements IFMLLoadingPlugin, IEarlyMixinLoader {
 

@@ -37,6 +37,6 @@ dependencies {
     implementation("net.dv8tion:JDA:5.1.2") {
         exclude module: 'opus-java'
     }
-    api("com.cronutils:cron-utils:9.2.1")
-    api("com.github.GTNewHorizons:ServerUtilities:2.0.84:dev")
+    implementation("com.cronutils:cron-utils:9.2.1")
+    api("com.github.GTNewHorizons:ServerUtilities:2.0.38:dev")
 }
