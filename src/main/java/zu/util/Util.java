@@ -51,9 +51,7 @@ public class Util {
     }
 
     public static void vanishPlayer(EntityPlayerMP player) {
-
         S38PacketPlayerListItem tablistPacket = new S38PacketPlayerListItem(player.getCommandSenderName(), false, 9999);
-        // TODO: Entity packet
         ((Vanishable) (((WorldServer) player.worldObj).getEntityTracker())).hidePlayer(player);
         for (EntityPlayerMP packetPlayer : player.mcServer.getConfigurationManager().playerEntityList) {
             if (!canSeeVanish(player) && player != packetPlayer) {
@@ -65,7 +63,6 @@ public class Util {
     public static void unVanishPlayer(EntityPlayerMP player) {
         S38PacketPlayerListItem tablistPacket = new S38PacketPlayerListItem(player.getCommandSenderName(), true, 1000);
         ((Vanishable) (((WorldServer) player.worldObj).getEntityTracker())).showPlayer(player);
-        // TODO: Entity packet
         for (EntityPlayerMP packetPlayer : player.mcServer.getConfigurationManager().playerEntityList) {
             if (!canSeeVanish(player) && player != packetPlayer) {
                 packetPlayer.playerNetServerHandler.sendPacket(tablistPacket);

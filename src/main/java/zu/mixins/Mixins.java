@@ -45,6 +45,16 @@ public enum Mixins {
         .setSide(Side.SERVER)
         .addMixinClasses("vanish.MixinEntityLivingBase")
         .setPhase(Phase.EARLY)
+        .setApplyIf(() -> ZUConfig.enableVanish)),
+    VANISH_MinecraftServer(new Builder("").addTargetedMod(VANILLA)
+        .setSide(Side.SERVER)
+        .addMixinClasses("vanish.MixinMinecraftServer")
+        .setPhase(Phase.EARLY)
+        .setApplyIf(() -> ZUConfig.enableVanish)),
+    VANISH_CommandListPlayers(new Builder("").addTargetedMod(VANILLA)
+        .setSide(Side.SERVER)
+        .addMixinClasses("vanish.MixinCommandListPlayers")
+        .setPhase(Phase.EARLY)
         .setApplyIf(() -> ZUConfig.enableVanish)),;
 
     private final List<String> mixinClasses;

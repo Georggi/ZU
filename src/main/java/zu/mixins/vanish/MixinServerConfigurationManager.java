@@ -1,6 +1,8 @@
 package zu.mixins.vanish;
 
-import static zu.util.Util.*;
+import static zu.util.Util.isVanished;
+import static zu.util.Util.vanishFilter$sendPacket;
+import static zu.util.Util.vanishFilter$sendPacketToAllPlayers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +13,16 @@ import net.minecraft.network.Packet;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.util.IChatComponent;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.llamalad7.mixinextras.sugar.Local;
 
-// TODO: players with SEE_VANISH permission receive modified (italics) username in player list
+// TODO: players with SEE_VANISH permission receive modified username in player list
 // TODO: Player himself also receives modified (italics) username in player list
 // TODO: Discord
 // TODO: JourneyMap (if handles properly then nothing to be done)
@@ -28,17 +32,19 @@ import com.llamalad7.mixinextras.sugar.Local;
 @Mixin(value = ServerConfigurationManager.class, remap = false)
 public class MixinServerConfigurationManager {
 
+    @Shadow
+    @Final
+    public List<net.minecraft.entity.player.EntityPlayerMP> playerEntityList;
+
     /**
      * @author Georggi
      * @reason Do not leak vanished players in tab completion
      */
     @Overwrite
     public String[] getAllUsernames() {
-        ServerConfigurationManager scm = (ServerConfigurationManager) (Object) this;
-
         List<EntityPlayerMP> playerEntityList = new ArrayList<>();
 
-        for (EntityPlayerMP player : scm.playerEntityList) {
+        for (EntityPlayerMP player : this.playerEntityList) {
             if (!isVanished(player)) {
                 playerEntityList.add(player);
             }
