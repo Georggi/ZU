@@ -29,7 +29,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 // TODO: Morpheus
 // TODO: chat
 
-@Mixin(value = ServerConfigurationManager.class, remap = false)
+@Mixin(value = ServerConfigurationManager.class)
 public class MixinServerConfigurationManager {
 
     @Shadow

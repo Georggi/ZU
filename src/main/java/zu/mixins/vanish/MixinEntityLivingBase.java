@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(value = EntityLivingBase.class, remap = false)
+@Mixin(value = EntityLivingBase.class)
 public class MixinEntityLivingBase {
 
     // protected void updateFallState(double p_70064_1_, boolean p_70064_3_)

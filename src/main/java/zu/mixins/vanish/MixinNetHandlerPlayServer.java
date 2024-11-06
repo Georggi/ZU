@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(value = NetHandlerPlayServer.class, remap = false)
+@Mixin(value = NetHandlerPlayServer.class)
 public class MixinNetHandlerPlayServer {
 
     @Redirect(

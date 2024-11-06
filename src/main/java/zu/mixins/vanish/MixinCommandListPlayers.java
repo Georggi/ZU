@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import com.google.common.collect.Lists;
 import com.llamalad7.mixinextras.sugar.Local;
 
-@Mixin(value = CommandListPlayers.class, remap = false)
+@Mixin(value = CommandListPlayers.class)
 public class MixinCommandListPlayers {
 
     @Redirect(

@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import zu.util.LocationResettable;
 import zu.util.Vanishable;
 
-@Mixin(value = EntityTracker.class, remap = false)
+@Mixin(value = EntityTracker.class)
 @Implements(@Interface(iface = Vanishable.class, prefix = "vanishable$"))
 public abstract class MixinEntityTracker {
 

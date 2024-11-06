@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.llamalad7.mixinextras.sugar.Local;
 
-@Mixin(value = MinecraftServer.class, remap = false)
+@Mixin(value = MinecraftServer.class)
 public class MixinMinecraftServer {
 
     @Shadow

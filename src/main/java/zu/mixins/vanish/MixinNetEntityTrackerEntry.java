@@ -20,7 +20,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 
 import zu.util.LocationResettable;
 
-@Mixin(value = EntityTrackerEntry.class, remap = false)
+@Mixin(value = EntityTrackerEntry.class)
 @Implements(@Interface(iface = LocationResettable.class, prefix = "locR$"))
 public abstract class MixinNetEntityTrackerEntry {
 
@@ -42,7 +42,8 @@ public abstract class MixinNetEntityTrackerEntry {
             ordinal = 1,
             shift = At.Shift.BEFORE,
             by = 1),
-        cancellable = true)
+        cancellable = true,
+        remap = false)
     private void onTryStartWachingThis(CallbackInfo ci, @Local(name = "arg1", argsOnly = true) EntityPlayerMP player) {
         if (this.myEntity instanceof EntityPlayerMP && isVanished((EntityPlayerMP) this.myEntity)
             && !canSeeVanish(player)) {
