@@ -34,9 +34,9 @@
  * For more details, see https://docs.gradle.org/8.0.1/userguide/java_library_plugin.html#sec:java_library_configurations_graph
  */
 dependencies {
-    implementation("net.dv8tion:JDA:5.1.2") {
+    shadowImplementation ("net.dv8tion:JDA:5.1.2") {
         exclude module: 'opus-java'
     }
-    implementation("com.cronutils:cron-utils:9.2.1")
-    api("com.github.GTNewHorizons:ServerUtilities:2.0.38:dev")
+    shadowImplementation ("com.cronutils:cron-utils:9.2.1")
+    api ("com.github.GTNewHorizons:ServerUtilities:2.0.38:dev")
 }
