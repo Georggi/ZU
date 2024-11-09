@@ -1,20 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8.5-GTNH",
-  "package": "zu.mixins",
   "refmap": "mixins.zu.refmap.json",
   "target": "@env(DEFAULT)",
-  "compatibilityLevel": "JAVA_8",
-  "mixins": [
-    "vanish.MixinServerConfigurationManager",
-    "vanish.MixinNetHandlerPlayServer",
-    "vanish.MixinNetEntityTrackerEntry",
-    "vanish.MixinEntityTracker",
-    "vanish.MixinEntity",
-    "vanish.MixinEntityLivingBase",
-    "vanish.MixinMinecraftServer",
-    "vanish.MixinCommandListPlayers"
-  ],
-  "client": [],
-  "server": []
+  "compatibilityLevel": "JAVA_8"
 }
