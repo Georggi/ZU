@@ -37,13 +37,12 @@ public abstract class MixinNetEntityTrackerEntry {
         method = "tryStartWachingThis",
         at = @At(
             value = "FIELD",
-            target = "trackingPlayers:Ljava/util/Set;",
+            target = "Lnet/minecraft/entity/EntityTrackerEntry;trackingPlayers:Ljava/util/Set;",
             opcode = Opcodes.GETFIELD,
             ordinal = 1,
             shift = At.Shift.BEFORE,
             by = 1),
-        cancellable = true,
-        remap = false)
+        cancellable = true)
     private void onTryStartWachingThis(CallbackInfo ci, @Local(name = "arg1", argsOnly = true) EntityPlayerMP player) {
         if (this.myEntity instanceof EntityPlayerMP && isVanished((EntityPlayerMP) this.myEntity)
             && !canSeeVanish(player)) {
