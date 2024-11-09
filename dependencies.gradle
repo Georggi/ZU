@@ -38,5 +38,5 @@ dependencies {
         exclude module: 'opus-java'
     }
     shadowImplementation ("com.cronutils:cron-utils:9.2.1")
-    api ("com.github.GTNewHorizons:ServerUtilities:2.0.38:dev")
+    api ("com.github.GTNewHorizons:ServerUtilities:2.0.84:dev")
 }
