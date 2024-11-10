@@ -1,16 +1,20 @@
 package com.georggi.zu;
 
+import net.minecraftforge.common.MinecraftForge;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.georggi.zu.command.ZUCommands;
+import com.georggi.zu.handlers.ChatEventHandler;
+import com.georggi.zu.restart.Restarter;
+import com.georggi.zu.util.RestartSchedule;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import com.georggi.zu.command.ZUCommands;
-import com.georggi.zu.restart.Restarter;
-import com.georggi.zu.util.RestartSchedule;
 
 @Mod(modid = ZU.MODID, name = "Zvezdolet Utilities", version = Tags.VERSION, acceptableRemoteVersions = "*")
 public class ZU {
@@ -30,6 +34,8 @@ public class ZU {
         ZU.LOG.info(ZUConfig.discordBotToken);
         ZU.LOG.info(ZUConfig.restartSchedule);
         ZU.LOG.info("I am " + ZU.MODID + " at version " + Tags.VERSION);
+
+        MinecraftForge.EVENT_BUS.register(new ChatEventHandler());
     }
 
     @Mod.EventHandler

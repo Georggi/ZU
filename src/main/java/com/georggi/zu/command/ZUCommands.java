@@ -1,8 +1,9 @@
 package com.georggi.zu.command;
 
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import com.georggi.zu.ZU;
 import com.georggi.zu.ZUConfig;
+
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 public class ZUCommands {
 

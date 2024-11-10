@@ -9,12 +9,13 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 
+import com.georggi.zu.ZUPermissions;
+
 import serverutils.lib.command.CmdBase;
 import serverutils.lib.command.CommandUtils;
 import serverutils.lib.data.ForgePlayer;
 import serverutils.lib.data.Universe;
 import serverutils.lib.util.NBTUtils;
-import com.georggi.zu.ZUPermissions;
 
 public class CmdVanish extends CmdBase {
 

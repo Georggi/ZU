@@ -1,6 +1,5 @@
 package com.georggi.zu.mixins.early.vanish;
 
-import com.georggi.zu.util.Util;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.ServerConfigurationManager;
@@ -12,6 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.georggi.zu.util.Util;
 import com.llamalad7.mixinextras.sugar.Local;
 
 @Mixin(value = MinecraftServer.class)

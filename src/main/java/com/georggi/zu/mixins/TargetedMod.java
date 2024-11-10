@@ -2,7 +2,9 @@ package com.georggi.zu.mixins;
 
 public enum TargetedMod {
 
-    VANILLA("Minecraft", null);
+    VANILLA("Minecraft", null),
+    DISCORD_INTEGRATION("DiscordIntegration", null, "discordintegration"),
+    MORPHEUS("Morpheus", null, "morpheus"),;
 
     /** The "name" in the @Mod annotation */
     public final String modName;

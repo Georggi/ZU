@@ -6,5 +6,5 @@ public class ZUPermissions {
     public static final String RESTART = "command.zu.restart";
 
     public static final String SEE_VANISH = "zu.see_vanish";
-    public static final String HIDE_JOIN_MESSAGE = "zu.hide_join_message";
+    public static final String HIDE_SYS_MESSAGES = "zu.hide_sys_messages";
 }

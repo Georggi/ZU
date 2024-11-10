@@ -1,6 +1,5 @@
 package com.georggi.zu.util;
 
-import com.georggi.zu.mixins.interfaces.Vanishable;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetHandlerPlayServer;
@@ -9,10 +8,12 @@ import net.minecraft.network.play.server.S38PacketPlayerListItem;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.world.WorldServer;
 
+import com.georggi.zu.ZUPermissions;
+import com.georggi.zu.mixins.interfaces.Vanishable;
+
 import serverutils.lib.command.CommandUtils;
 import serverutils.lib.data.ForgePlayer;
 import serverutils.lib.util.NBTUtils;
-import com.georggi.zu.ZUPermissions;
 
 public class Util {
 
@@ -23,7 +24,7 @@ public class Util {
 
     public static boolean systemChatMsgHidden(EntityPlayerMP player) {
         ForgePlayer forgePlayer = CommandUtils.getForgePlayer(player);
-        return forgePlayer.hasPermission(ZUPermissions.HIDE_JOIN_MESSAGE);
+        return forgePlayer.hasPermission(ZUPermissions.HIDE_SYS_MESSAGES);
     }
 
     public static boolean canSeeVanish(EntityPlayerMP player) {
