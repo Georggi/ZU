@@ -33,10 +33,25 @@
  *
  * For more details, see https://docs.gradle.org/8.0.1/userguide/java_library_plugin.html#sec:java_library_configurations_graph
  */
+configurations {
+    transformedMod // Mods that can be transformed - used for compiling hodgepodge, but not necessary at runtime
+    transformedMod.canBeConsumed = false
+    transformedModCompileOnly
+    transformedModCompileOnly.canBeConsumed = false
+
+    // Add the transformed mod dependencies to the compilation and runtime classpaths, but don't publish them in the Maven metadata
+    compileClasspath.extendsFrom(transformedMod, transformedModCompileOnly)
+    runtimeClasspath.extendsFrom(transformedMod)
+    testCompileClasspath.extendsFrom(transformedMod, transformedModCompileOnly)
+    testRuntimeClasspath.extendsFrom(transformedMod)
+}
+
 dependencies {
     shadowImplementation ("net.dv8tion:JDA:5.1.2") {
         exclude module: 'opus-java'
     }
     shadowImplementation ("com.cronutils:cron-utils:9.2.1")
     api ("com.github.GTNewHorizons:ServerUtilities:2.0.38:dev")
+
+    transformedModCompileOnly(deobfCurse("discordintegration-245288:2542338"))
 }

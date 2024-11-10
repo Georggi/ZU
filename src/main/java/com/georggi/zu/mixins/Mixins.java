@@ -1,5 +1,6 @@
 package com.georggi.zu.mixins;
 
+import static com.georggi.zu.mixins.TargetedMod.DISCORD_INTEGRATION;
 import static com.georggi.zu.mixins.TargetedMod.VANILLA;
 
 import java.util.ArrayList;
@@ -56,6 +57,12 @@ public enum Mixins {
         .setSide(Side.SERVER)
         .addMixinClasses("vanish.MixinCommandListPlayers")
         .setPhase(Phase.EARLY)
+        .setApplyIf(() -> ZUConfig.enableVanish)),
+
+    VANISH_CHIKACHI_MinecraftListener(new Builder("").addTargetedMod(DISCORD_INTEGRATION)
+        .setSide(Side.SERVER)
+        .addMixinClasses("vanish.MixinChikachiMinecraftListener")
+        .setPhase(Phase.LATE)
         .setApplyIf(() -> ZUConfig.enableVanish)),;
 
     private final List<String> mixinClasses;
