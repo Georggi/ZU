@@ -10,9 +10,10 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import cpw.mods.fml.relauncher.FMLLaunchHandler;
 import com.georggi.zu.ZU;
 import com.georggi.zu.ZUConfig;
+
+import cpw.mods.fml.relauncher.FMLLaunchHandler;
 
 public enum Mixins {
 

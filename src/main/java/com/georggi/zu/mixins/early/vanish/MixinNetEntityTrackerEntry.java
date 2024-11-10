@@ -14,9 +14,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.llamalad7.mixinextras.sugar.Local;
-
 import com.georggi.zu.mixins.interfaces.LocationResettable;
+import com.llamalad7.mixinextras.sugar.Local;
 
 @Mixin(value = EntityTrackerEntry.class)
 public abstract class MixinNetEntityTrackerEntry implements LocationResettable {

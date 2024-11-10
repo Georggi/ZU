@@ -1,11 +1,11 @@
 package com.georggi.zu;
 
-import com.gtnewhorizon.gtnhmixins.ILateMixinLoader;
-import com.gtnewhorizon.gtnhmixins.LateMixin;
-import com.georggi.zu.mixins.Mixins;
-
 import java.util.List;
 import java.util.Set;
+
+import com.georggi.zu.mixins.Mixins;
+import com.gtnewhorizon.gtnhmixins.ILateMixinLoader;
+import com.gtnewhorizon.gtnhmixins.LateMixin;
 
 @LateMixin
 public class ZULateMixins implements ILateMixinLoader {

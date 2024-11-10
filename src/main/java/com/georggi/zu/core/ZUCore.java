@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.georggi.zu.mixins.Mixins;
 import com.gtnewhorizon.gtnhmixins.IEarlyMixinLoader;
 
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
-import com.georggi.zu.mixins.Mixins;
 
 public class ZUCore implements IFMLLoadingPlugin, IEarlyMixinLoader {
 

@@ -4,14 +4,14 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
+
+import com.georggi.zu.ZUPermissions;
+import com.georggi.zu.restart.Restarter;
 
 import serverutils.lib.command.CmdBase;
 import serverutils.lib.command.CommandUtils;
 import serverutils.lib.data.ForgePlayer;
-import com.georggi.zu.ZUPermissions;
-import com.georggi.zu.restart.Restarter;
 
 public class CmdRestart extends CmdBase {
 
@@ -46,9 +46,7 @@ public class CmdRestart extends CmdBase {
                 }
                 break;
             case "now":
-                sender.addChatMessage(
-                    new ChatComponentText("Restarting now")
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_PURPLE)));
+                sender.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "Restarting now"));
                 server.initiateShutdown();
                 break;
             default:
@@ -57,9 +55,7 @@ public class CmdRestart extends CmdBase {
                 }
                 int delay = parseInt(sender, args[0]);
                 server.getConfigurationManager()
-                    .sendChatMsg(
-                        new ChatComponentText("Server restart initiated")
-                            .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.DARK_PURPLE)));
+                    .sendChatMsg(new ChatComponentText(EnumChatFormatting.DARK_PURPLE + "Server restart initiated"));
                 manualRestarter = new Restarter(delay, 3600);
         }
     }
