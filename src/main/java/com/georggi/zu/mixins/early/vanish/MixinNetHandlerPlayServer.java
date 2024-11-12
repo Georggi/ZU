@@ -2,6 +2,7 @@ package com.georggi.zu.mixins.early.vanish;
 
 import static com.georggi.zu.util.Util.systemChatMsgHidden;
 
+import net.minecraft.command.CommandException;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.util.IChatComponent;
@@ -21,8 +22,12 @@ public class MixinNetHandlerPlayServer {
     public void onDisconnect_sendChatMsg(ServerConfigurationManager scm, IChatComponent component) {
         NetHandlerPlayServer nps = (NetHandlerPlayServer) (Object) this;
 
-        if (!systemChatMsgHidden(nps.playerEntity)) {
-            scm.sendChatMsg(component);
+        try {
+            if (!systemChatMsgHidden(nps.playerEntity)) {
+                scm.sendChatMsg(component);
+            }
+        } catch (CommandException ignored) {
+            // In the meantime, fix '<Player> left the server' without ever joining issue
         }
     }
 }
