@@ -1,6 +1,5 @@
 package com.georggi.zu.util;
 
-import net.minecraft.command.CommandException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetHandlerPlayServer;
@@ -27,7 +26,7 @@ public class Util {
         try {
             ForgePlayer forgePlayer = CommandUtils.getForgePlayer(player);
             return forgePlayer.hasPermission(ZUPermissions.HIDE_SYS_MESSAGES);
-        } catch (CommandException e) {
+        } catch (Exception e) {
             return true; // Hide stupid bugged messages
         }
     }
