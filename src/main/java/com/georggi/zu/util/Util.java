@@ -1,5 +1,6 @@
 package com.georggi.zu.util;
 
+import net.minecraft.command.CommandException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetHandlerPlayServer;
@@ -8,6 +9,7 @@ import net.minecraft.network.play.server.S38PacketPlayerListItem;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.world.WorldServer;
 
+import com.georggi.zu.ZU;
 import com.georggi.zu.ZUPermissions;
 import com.georggi.zu.mixins.interfaces.Vanishable;
 
@@ -26,14 +28,35 @@ public class Util {
         try {
             ForgePlayer forgePlayer = CommandUtils.getForgePlayer(player);
             return forgePlayer.hasPermission(ZUPermissions.HIDE_SYS_MESSAGES);
+        } catch (CommandException e) {
+            ZU.LOG.error("Error while checking if system chat message should be hidden", e);
+            return true;
+        } catch (NullPointerException e) {
+            return false;
         } catch (Exception e) {
+            ZU.LOG.error("Error while checking if system chat message should be hidden", e);
             return true; // Hide stupid bugged messages
         }
     }
 
+    public static boolean canSeeSysMessages(EntityPlayerMP player) {
+        try {
+            ForgePlayer forgePlayer = CommandUtils.getForgePlayer(player);
+            return forgePlayer.hasPermission(ZUPermissions.SEE_SYS_MESSAGES);
+        } catch (Exception e) {
+            ZU.LOG.error("Error while checking if player can see system chat messages", e);
+            return false;
+        }
+    }
+
     public static boolean canSeeVanish(EntityPlayerMP player) {
-        ForgePlayer forgePlayer = CommandUtils.getForgePlayer(player);
-        return forgePlayer.hasPermission(ZUPermissions.SEE_VANISH);
+        try {
+            ForgePlayer forgePlayer = CommandUtils.getForgePlayer(player);
+            return forgePlayer.hasPermission(ZUPermissions.SEE_VANISH);
+        } catch (Exception e) {
+            ZU.LOG.error("Error while checking if player can see vanish", e);
+            return false;
+        }
     }
 
     public static void sendPlayerPacketToAllowedPlayers(ServerConfigurationManager scm, Packet packetIn,
@@ -65,17 +88,20 @@ public class Util {
         S38PacketPlayerListItem tablistPacket = new S38PacketPlayerListItem(player.getCommandSenderName(), false, 9999);
         ((Vanishable) (((WorldServer) player.worldObj).getEntityTracker())).hidePlayer(player);
         for (EntityPlayerMP packetPlayer : player.mcServer.getConfigurationManager().playerEntityList) {
-            if (!canSeeVanish(player) && player != packetPlayer) {
+            if (!canSeeVanish(packetPlayer) && player != packetPlayer) {
                 packetPlayer.playerNetServerHandler.sendPacket(tablistPacket);
             }
         }
     }
 
     public static void unVanishPlayer(EntityPlayerMP player) {
-        S38PacketPlayerListItem tablistPacket = new S38PacketPlayerListItem(player.getCommandSenderName(), true, 1000);
+        S38PacketPlayerListItem tablistPacket = new S38PacketPlayerListItem(
+            player.getCommandSenderName(),
+            true,
+            player.ping);
         ((Vanishable) (((WorldServer) player.worldObj).getEntityTracker())).showPlayer(player);
         for (EntityPlayerMP packetPlayer : player.mcServer.getConfigurationManager().playerEntityList) {
-            if (!canSeeVanish(player) && player != packetPlayer) {
+            if (!canSeeVanish(packetPlayer) && player != packetPlayer) {
                 packetPlayer.playerNetServerHandler.sendPacket(tablistPacket);
             }
         }

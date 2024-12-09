@@ -1,5 +1,6 @@
 package com.georggi.zu.mixins.early.vanish;
 
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.ServerConfigurationManager;
@@ -9,8 +10,10 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.georggi.zu.mixins.interfaces.BetterGetAllUsernames;
 import com.georggi.zu.util.Util;
 import com.llamalad7.mixinextras.sugar.Local;
 
@@ -48,5 +51,15 @@ public class MixinMinecraftServer {
             ++j;
             player = serverConfigManager.playerEntityList.get(j + k);
         }
+    }
+
+    @Redirect(
+        method = "getPossibleCompletions",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/management/ServerConfigurationManager;getAllUsernames()[Ljava/lang/String;"))
+    public String[] getPossibleCompletions_getAllUsernames(ServerConfigurationManager scm,
+        @Local(name = "arg1", argsOnly = true) ICommandSender sender) {
+        return ((BetterGetAllUsernames) scm).getAllUsernames(sender);
     }
 }

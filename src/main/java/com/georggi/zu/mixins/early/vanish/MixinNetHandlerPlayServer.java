@@ -1,7 +1,9 @@
 package com.georggi.zu.mixins.early.vanish;
 
+import static com.georggi.zu.util.Util.canSeeSysMessages;
 import static com.georggi.zu.util.Util.systemChatMsgHidden;
 
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.util.IChatComponent;
@@ -22,6 +24,12 @@ public class MixinNetHandlerPlayServer {
         NetHandlerPlayServer nps = (NetHandlerPlayServer) (Object) this;
         if (!systemChatMsgHidden(nps.playerEntity)) {
             scm.sendChatMsg(component);
+        } else {
+            for (EntityPlayerMP player : scm.playerEntityList) {
+                if (player != nps.playerEntity && canSeeSysMessages(player)) {
+                    player.addChatMessage(component);
+                }
+            }
         }
     }
 }

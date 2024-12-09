@@ -1,5 +1,6 @@
 package com.georggi.zu.mixins.early.vanish;
 
+import static com.georggi.zu.util.Util.canSeeVanish;
 import static com.georggi.zu.util.Util.isVanished;
 import static com.georggi.zu.util.Util.systemChatMsgHidden;
 import static com.georggi.zu.util.Util.vanishFilter$sendPacket;
@@ -8,6 +9,7 @@ import static com.georggi.zu.util.Util.vanishFilter$sendPacketToAllPlayers;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.Packet;
@@ -21,6 +23,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import com.georggi.zu.mixins.interfaces.BetterGetAllUsernames;
 import com.llamalad7.mixinextras.sugar.Local;
 
 // TODO: players with SEE_VANISH permission receive modified username in player list
@@ -31,22 +34,20 @@ import com.llamalad7.mixinextras.sugar.Local;
 // TODO: chat
 
 @Mixin(value = ServerConfigurationManager.class)
-public class MixinServerConfigurationManager {
+public abstract class MixinServerConfigurationManager implements BetterGetAllUsernames {
 
     @Shadow
     @Final
     public List<net.minecraft.entity.player.EntityPlayerMP> playerEntityList;
 
     /**
-     * @author Georggi
-     * @reason Do not leak vanished players in tab completion
+     * Returns an array of the usernames of all the connected players, available for a particular sender.
      */
-    @Overwrite
-    public String[] getAllUsernames() {
+    public String[] getAllUsernames(ICommandSender sender) {
         List<EntityPlayerMP> playerEntityList = new ArrayList<>();
 
         for (EntityPlayerMP player : this.playerEntityList) {
-            if (!isVanished(player)) {
+            if (!isVanished(player) || (sender instanceof EntityPlayerMP && canSeeVanish((EntityPlayerMP) sender))) {
                 playerEntityList.add(player);
             }
         }
@@ -58,6 +59,14 @@ public class MixinServerConfigurationManager {
         }
 
         return astring;
+    }
+
+    /**
+     * @reason Do not leak vanished players in tab completion
+     */
+    @Overwrite
+    public String[] getAllUsernames() {
+        return getAllUsernames(null);
     }
 
     @Redirect(
